@@ -1,34 +1,26 @@
-import socket
+import socket 
 
 def main():
-	host = "127.0.0.1"
-	port = 7890
+	mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-	s = socket.socket()
+	host_ip = "127.0.0.1"   # my device address
 
-	s.bind((host, port))
+	host_port = 15370		# any random port
 
-	s.listen(1)
+	mysocket.bind(host_ip, host_port)	
 
-	c, addr = s.accept()
+	mysocket.listen(5)     # backlog in default documentation page , you can take any value other than 5
 
-	print("Connection from : " + str(addr) + "and c is : " + str(c))
+	(client, (ip, host_port)) = mysocket.accept()
 
-	while True:
-		data = c.recv(1024)   #number of bytes you wanna receive at one time
+	client.send("Hey!! server this side : ".encode())
 
-		if not data:
-			break
+	data = client.recv(2048).decode()   # 2048 bytes of data received at a time
 
-		print("We got this from the connected user : " + str(data))
+	print(data)
 
-		print("Sending the acknowledgement : ")
-
-		to_send = "We received from you, thanks!!!".encode()
-		c.send(to_send)
-
-	c.close()
+	mysocket.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()
