@@ -7,7 +7,7 @@ def main():
 
 	host_port = 15370		# any random port
 
-	mysocket.bind(host_ip, host_port)	
+	mysocket.bind((host_ip, host_port))	
 
 	mysocket.listen(5)     # backlog in default documentation page , you can take any value other than 5
 
@@ -22,5 +22,5 @@ def main():
 	mysocket.close()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
 	main()
