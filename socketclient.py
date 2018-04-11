@@ -1,26 +1,21 @@
 import socket
 
 def main():
-	host = '127.0.0.1'
+	mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-	port = 7890
+	server_ip = "127.0.0.1"
 
-	s = socket.socket()
+	server_port = 15370
 
-	message = input("Enter something to send : ").encode()
+	mysocket.connect((server_ip, server_port))
 
-	while message != 'q':
-		s.send(message)
+	data = mysocket.recv(2048).decode()
 
-		data = s.recv(1024)
+	print(data)
 
-		print("Received this from the server : " + str(data))
+	mysocket.send("This is from the client side!!".encode())
 
-		message = input("Enter the message you want to send : ").encode()
+	mysocket.close()
 
-	s.close()
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()
-
